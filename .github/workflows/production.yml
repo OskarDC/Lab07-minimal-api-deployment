@@ -23,6 +23,11 @@ jobs:
           dotnet restore
           dotnet publish -c Release -o published
 
+      - name: Zip the published files
+        run: |
+          cd minimal-api/published
+          zip -r ../minimal-api.zip .
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -55,5 +60,6 @@ jobs:
       - name: Deploy to Azure Web App
         run: |
           az webapp deploy --resource-group declerck-rg-prod-westeurope \
-                          --name declerck-as-prod-westeurope \
-                          --src-path ./published/
+                            --name declerck-as-prod-westeurope \
+                            --src-path ./published/minimal-api.zip \
+                            --type zip
