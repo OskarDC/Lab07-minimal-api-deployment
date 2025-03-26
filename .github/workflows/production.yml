@@ -30,6 +30,8 @@ jobs:
           path: minimal-api/published/
 
   deploy:
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     needs: build
     steps:
