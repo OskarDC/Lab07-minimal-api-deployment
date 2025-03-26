@@ -19,6 +19,7 @@ jobs:
 
       - name: Build and Publish
         run: |
+          cd minimal-api
           dotnet restore
           dotnet publish -c Release -o published
 
