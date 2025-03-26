@@ -19,27 +19,35 @@ jobs:
 
       - name: Build and Publish
         run: |
+          cd minimal-api
           dotnet restore
           dotnet publish -c Release -o published
+
+      - name: Zip the published files
+        run: |
+          cd minimal-api/published
+          zip -r ../minimal-api.zip .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-app
-          path: published/
+          path: minimal-api/minimal-api.zip
 
   deploy:
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dotnet-app
-          path: published/
+          path: ./published/
 
       - name: Login to Azure
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -48,5 +56,6 @@ jobs:
       - name: Deploy to Azure Web App
         run: |
           az webapp deploy --resource-group declerck-rg-dev-westeurope \
-                          --name declerck-as-dev-westeurope \
-                          --src-path published/
+                            --name declerck-as-dev-westeurope \
+                            --src-path ./published/minimal-api.zip \
+                            --type zip
