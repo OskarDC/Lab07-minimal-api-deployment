@@ -52,4 +52,4 @@ jobs:
         run: |
           az webapp deploy --resource-group declerck-rg-prod-westeurope \
                           --name declerck-as-prod-westeurope \
-                          --src-path minimal-api/published/
+                          --src-path ./published/
