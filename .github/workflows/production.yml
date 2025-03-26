@@ -48,6 +48,10 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+      - name: List contents of the published directory
+        run: |
+          ls -la ./published/
+
       - name: Deploy to Azure Web App
         run: |
           az webapp deploy --resource-group declerck-rg-prod-westeurope \
