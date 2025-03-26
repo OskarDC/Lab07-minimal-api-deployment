@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-app
-          path: published/
+          path: minimal-api/published/
 
   deploy:
     runs-on: ubuntu-latest
