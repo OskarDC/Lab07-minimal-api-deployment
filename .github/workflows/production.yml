@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-app
-          path: minimal-api/published/
+          path: minimal-api/minimal-api.zip
 
   deploy:
     permissions:
@@ -44,7 +44,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dotnet-app
-          path: published/
+          path: ./published/
 
       - name: Login to Azure
         uses: azure/login@v2
