@@ -58,8 +58,11 @@ jobs:
           ls -la ./published/
 
       - name: Deploy to Azure Web App
-        run: |
-          az webapp deploy --resource-group declerck-rg-prod-westeurope \
-                            --name declerck-as-prod-westeurope \
-                            --src-path ./published/minimal-api.zip \
-                            --type zip
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az webapp deploy --resource-group declerck-rg-prod-westeurope \
+                              --name declerck-as-prod-westeurope \
+                              --src-path ./published/minimal-api.zip \
+                              --type zip
